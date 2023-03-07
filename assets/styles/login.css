@@ -1,0 +1,14 @@
+#login-form-wrapper {
+  text-align: center;
+}
+
+#spinner {
+  display: inline-block;
+  text-align: center;
+}
+
+#login-form {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}

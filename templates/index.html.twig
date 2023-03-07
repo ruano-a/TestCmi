@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles homepage{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('index') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Recent comments</h1>
+    <div id="recent-comments">
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('index') }}
+{% endblock %}

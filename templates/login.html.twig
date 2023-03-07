@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login page{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <div id="login-form-wrapper">
+        <div id="login-form">
+            <div id="fb-root"></div>
+            <div id="spinner"
+                style="
+                    background: #4267b2;
+                    border-radius: 5px;
+                    color: white;
+                    height: 40px;
+                    text-align: center;
+                    width: 250px;">
+                Loading
+                <div
+                class="fb-login-button"
+                data-max-rows="1"
+                data-size="large"
+                data-button-type="continue_with"
+                data-use-continue-as="true"
+                data-scope="public_profile,email"
+                data-onlogin="checkLoginState();"
+                ></div>
+            </div>
+        </div>
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0&appId=916840026018060&autoLogAppEvents=1" nonce="OIJTmHPV"></script>
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}

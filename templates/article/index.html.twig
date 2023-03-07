@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article homepage{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('article') }}
+{% endblock %}
+
+{% block body %}
+    <div id="article">
+        <h1 id="article-title"></h1>
+        <div id="article-content"></div>
+        <div id="article-bottom">
+            <div id="article-date"></div>
+            <div id="article-author"></div>
+        </div>
+    </div>
+    <button id="load-comments"></buttom>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('article') }}
+{% endblock %}
