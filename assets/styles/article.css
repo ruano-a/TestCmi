@@ -31,3 +31,8 @@
 .comment-right-part {
 	width: 80%; /* the missing % is to compensate the inline-block margin */
 }
+
+#send-comment-input {
+	width: 100%;
+	display: block;
+}

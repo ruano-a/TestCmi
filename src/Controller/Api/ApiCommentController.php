@@ -26,4 +26,11 @@ class ApiCommentController extends BaseApiController
         return $this->serializedResponse($article->getComments());
     }
 
+    #[Route('/post/{id}', name: 'post_comment')]
+    #[ParamConverter('article', class: Article::class)]
+    public function postComment(Article $article): Response
+    {
+        
+        return $this->serializedResponse($article->getComments());
+    }
 }

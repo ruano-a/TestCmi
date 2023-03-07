@@ -5,8 +5,12 @@ import './styles/article.css';
 
 const articleBaseUrl = ApiService.getApiBaseUrl() + 'article/';
 const commentsBaseUrl = ApiService.getApiBaseUrl() + 'comment/';
+const postCommentBaseUrl = ApiService.getApiBaseUrl() + 'comment/post/';
 
-function createCommentBlock(commentData, level) {
+
+var commentSending = false;
+
+function createCommentBlock(commentData, level, sendCommentArea) {
 	const container = document.createElement("div");
 	const moveRight = level * 30;
 	container.className = 'article-comment';
@@ -16,6 +20,7 @@ function createCommentBlock(commentData, level) {
 							+ '<div class="comment-right-part">'
 								+ '<div class="comment-content">' + commentData.text + '</div>'
 								+ '<div class="comment-date">' + ViewService.formatDate(commentData.creationDate) + '</div>'
+								+ (sendCommentArea ? '<a class="comment-answer" data-id="'+ commentData.id +'" href="#">Answer</a>' : '')
 							+ '</div>';
 	return container;
 }
@@ -41,14 +46,26 @@ function sortCommentsByParent(comments) {
 }
 
 function addCommentsWaterfall(commentContainer, sortedComments, level) {
+	const sendCommentArea = document.getElementById('send-comment-area');
+
 	sortedComments.forEach(commentData => {
-		commentContainer.appendChild(createCommentBlock(commentData, level));
+		const newComment = createCommentBlock(commentData, level, sendCommentArea);
+		const answerLink = newComment.getElementsByClassName('comment-answer');
+		if (answerLink) {
+			answerLink[0].addEventListener('click', (e) => {
+				e.preventDefault();
+				const commentParent = document.getElementById('send-comment-parent');
+				commentParent.value = e.target.getAttribute('data-id');
+			})
+		}
+		commentContainer.appendChild(newComment);
 		addCommentsWaterfall(commentContainer, commentData.children, level + 1);
 	});
 }
 
 function loadComments(articleId) {
 	const commentsButton = document.getElementById('load-comments');
+	const sendCommentArea = document.getElementById('send-comment-area');
 
 	ApiService.get(commentsBaseUrl + articleId, (result) => {
 		const commentContainer = document.getElementById('article-comments')
@@ -56,11 +73,28 @@ function loadComments(articleId) {
 		console.log(sortedComments);
 		addCommentsWaterfall(commentContainer, sortedComments, 0);
 		commentsButton.remove();
+		if (sendCommentArea)
+			sendCommentArea.removeAttribute('style');
 	},
 	(error) => {
 		console.error(error);
 		window.alert(error);
 		commentsButton.innerHTML = 'Load comments';
+	});
+}
+
+function sendComment() {
+	commentSending = true;
+	ApiService.post(ApiService.getApiBaseUrl() + 'login/facebook', data, (result) => {
+		console.log("Success:", result.data);
+		if (result.result === 'ok')
+			window.location.href = '/';
+		else
+			window.alert(result.message);
+	},
+	(error) => {
+		console.error(error);
+		window.alert(error);
 	});
 }
 
@@ -71,6 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	const dateContainer = document.getElementById('article-date');
 	const authorContainer = document.getElementById('article-author');
 	const commentsButton = document.getElementById('load-comments');
+	const sendCommentButton = document.getElementById('send-comment-button');
+	const sendCommentInput = document.getElementById('send-comment-input');
 
 	ApiService.get(articleBaseUrl + id, (result) => {
 		
@@ -87,5 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	commentsButton.addEventListener('click', () => {
 		commentsButton.innerHTML = 'Loading';
 		loadComments(id);
+	});
+	sendCommentButton.addEventListener('click', () => {
+		sendComment(sendCommentInput.value);
 	});
 });

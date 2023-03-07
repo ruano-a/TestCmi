@@ -20,6 +20,15 @@
         <div id="article-comments">
         </div>
         <button id="load-comments">Load comments</button>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div id="send-comment-area" style="display: none">
+                <input type="hidden" id="send-comment-parent" name="comment[parentComment]"/>
+                <input type="hidden" id="send-comment-article" name="comment[article]" value="{{ articleId }}"/>
+                {{ form_widget(form.text, { id: 'send-comment-input'}) }}
+                {{ form_widget(form._token) }}
+                <button id="send-comment-button">Send comment</button>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -2,6 +2,11 @@ body {
     background-color: lightgray;
 }
 
+#logo {
+    all: unset;
+    cursor: pointer;
+}
+
 header {
     background-color: white;
     font-size: 30px;

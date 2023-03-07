@@ -13,6 +13,7 @@ class CommentController extends BaseViewController
     public function index(): Response
     {
         return $this->render('comment/index.html.twig', [
+            'form' 
         ]);
     }
 }
