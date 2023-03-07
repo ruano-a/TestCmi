@@ -5,7 +5,7 @@ import './styles/article.css';
 
 const articleBaseUrl = ApiService.getApiBaseUrl() + 'article/';
 const commentsBaseUrl = ApiService.getApiBaseUrl() + 'comment/';
-const postCommentBaseUrl = ApiService.getApiBaseUrl() + 'comment/post/';
+const postCommentUrl = ApiService.getApiBaseUrl() + 'comment/post';
 
 
 var commentSending = false;
@@ -85,12 +85,17 @@ function loadComments(articleId) {
 
 function sendComment() {
 	commentSending = true;
-	ApiService.post(ApiService.getApiBaseUrl() + 'login/facebook', data, (result) => {
+	const form = document.getElementById('send-comment-area');
+	const data = new URLSearchParams();
+	for (const pair of new FormData(form)) {
+	    data.append(pair[0], pair[1]);
+	}
+	ApiService.postForm(postCommentUrl, data, (result) => {
 		console.log("Success:", result.data);
-		if (result.result === 'ok')
+		/*if (result.result === 'ok')
 			window.location.href = '/';
 		else
-			window.alert(result.message);
+			window.alert(result.message);*/
 	},
 	(error) => {
 		console.error(error);
@@ -124,7 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		commentsButton.innerHTML = 'Loading';
 		loadComments(id);
 	});
-	sendCommentButton.addEventListener('click', () => {
+	sendCommentButton.addEventListener('click', (e) => {
+		e.preventDefault();
 		sendComment(sendCommentInput.value);
 	});
 });

@@ -44,6 +44,23 @@ class ApiService {
             if (callbackBoth) callbackBoth(false);
         });
     }
+
+    postForm(url, data, callbackSuccess, callbackFail, callbackBoth) {
+        fetch(url, {
+            method: 'POST',
+            credentials: "include",
+            body: data,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (callbackSuccess) callbackSuccess(data); // doesn't REALLY mean it's a success, just that the query went through and got an answer
+            if (callbackBoth) callbackBoth(true, data);
+        })
+        .catch((error) => {
+            if (callbackFail) callbackFail(error);
+            if (callbackBoth) callbackBoth(false);
+        });
+    }
 }
 
 export default new ApiService();

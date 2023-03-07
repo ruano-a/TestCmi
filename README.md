@@ -23,15 +23,12 @@ php bin/console doctrine:fixtures:load
 * The error messages saying that you can't use facebook api in http doesn't matter in development mode
 
 * form submit (php)
+* get api js (jquery?)
+* indexs
+
+
 * home page
 * article page
 * api provide article
-* get api js (jquery?)
-* indexs
-* login facebook
-* login gmail
-* test, phpunit / behat
-* patterns pour serialization
-
-
 * constraints
+* login facebook
