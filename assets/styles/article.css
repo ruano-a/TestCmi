@@ -1,0 +1,33 @@
+#article, #article-comments-area {
+	margin-top: 15px;
+	background-color: white;
+	padding: 20px;
+}
+
+#article-bottom {
+	margin-top: 5px;
+}
+
+#article-bottom * {
+	display: inline-block;
+}
+
+.article-comment {
+	margin-bottom: 15px;
+	background-color: white;
+	border: grey solid 1px;
+}
+
+.article-comment > * {
+	display: inline-block;
+	vertical-align: top;
+	padding: 5px;
+}
+
+.comment-author {
+	width: 15%;
+}
+
+.comment-right-part {
+	width: 80%; /* the missing % is to compensate the inline-block margin */
+}

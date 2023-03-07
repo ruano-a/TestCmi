@@ -1,4 +1,5 @@
 import ApiService from './common/ApiService.js';
+import ViewService from './common/ViewService.js';
 import './styles/index.css';
 
 const articleBaseUrl = '/article/';
@@ -6,9 +7,12 @@ const articleBaseUrl = '/article/';
 function createCommentBlock(commentData) {
 	const container = document.createElement("div");
 	container.className = 'recent-comment';
-	container.innerHTML = '<div class="recent-comment-article">For the article <a href="'+ articleBaseUrl + commentData.article.id + '">"' + commentData.article.title + '"</a></div>'
-							+ '<div class="recent-comment-content">' + commentData.text + '</div>'
-							+ '<div class="recent-comment-date">' + commentData.creationDate + '</div>';
+	container.innerHTML = '<div class="recent-comment-author">' + commentData.createdByUser.username + '</div>'
+							+ '<div class="recent-comment-right-part">'
+								+ '<div class="recent-comment-article">For the article <a href="'+ articleBaseUrl + commentData.article.id + '">"' + commentData.article.title + '"</a></div>'
+								+ '<div class="recent-comment-content">' + commentData.text + '</div>'
+								+ '<div class="recent-comment-date">' + ViewService.formatDate(commentData.creationDate) + '</div>'
+							+ '</div>';
 	return container;
 }
 

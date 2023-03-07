@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-    <div id="article">
+    <div id="article" data-id="{{ articleId }}">
         <h1 id="article-title"></h1>
         <div id="article-content"></div>
         <div id="article-bottom">
@@ -16,7 +16,11 @@
             <div id="article-author"></div>
         </div>
     </div>
-    <button id="load-comments"></buttom>
+    <div id="article-comments-area">
+        <div id="article-comments">
+        </div>
+        <button id="load-comments">Load comments</button>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

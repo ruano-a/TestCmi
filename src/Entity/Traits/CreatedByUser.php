@@ -10,6 +10,7 @@ trait CreatedByUser
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read', 'read-recent-comments'])]
     protected User $createdByUser;
     
     public function getCreatedByUser(): ?User

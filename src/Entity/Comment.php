@@ -17,6 +17,7 @@ class Comment
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 500)]
@@ -33,6 +34,7 @@ class Comment
 
     #[ORM\ManyToOne(targetEntity: Comment::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['read'])]
     private ?Comment $parentComment = null;
 
     public function getId(): ?int

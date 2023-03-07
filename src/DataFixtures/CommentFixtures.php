@@ -49,6 +49,13 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             'date'                      => '2023-02-07 17:14:45',
             'creatorMail'               => 'admin@gmail.com'
         ],
+        [
+            'articleId'                 => 2, // could have been done with the title to be more clear, but it's weird
+            'content'                   => 'Random comment',
+            'childOfPreviousComment'    => false,
+            'date'                      => '2023-02-07 17:14:49',
+            'creatorMail'               => 'admin@gmail.com'
+        ],
     ];
 
     public function load(ObjectManager $manager): void

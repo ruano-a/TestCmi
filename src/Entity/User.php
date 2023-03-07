@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['read'])]
+    #[Groups(['read', 'read-recent-comments'])]
     #[Assert\Length(min: 5, minMessage: "username.length.min", max: 50, maxMessage: "username.length.max")]
     #[Assert\NotBlank()]
     #[Assert\NotNull()]
