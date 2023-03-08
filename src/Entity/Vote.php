@@ -9,8 +9,10 @@ use App\Entity\Traits\CreationDate;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
+#[ORM\UniqueConstraint(name: "uniq_user_comment", columns: ["created_by_user_id", "comment_id"])]
 class Vote
 {
     use CreatedByUser;
@@ -30,10 +32,6 @@ class Vote
     #[ORM\ManyToOne(targetEntity: Comment::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Comment $comment = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    protected User $createdByUser;
 
     public function getId(): ?int
     {
@@ -60,18 +58,6 @@ class Vote
     public function setComment(Comment $comment): self
     {
         $this->comment = $comment;
-
-        return $this;
-    }
-    
-    public function getCreatedByUser(): ?User
-    {
-        return $this->createdByUser;
-    }
-
-    public function setCreatedByUser(User $createdByUser): self
-    {
-        $this->createdByUser = $createdByUser;
 
         return $this;
     }

@@ -24,7 +24,7 @@
 	padding: 5px;
 }
 
-.comment-author {
+.comment-left-part {
 	width: 15%;
 }
 
@@ -35,4 +35,13 @@
 #send-comment-input {
 	width: 100%;
 	display: block;
+}
+
+.comment-vote > * {
+	cursor: pointer;
+	font-size: 1.1em;
+}
+
+.comment-vote-minus {
+	margin-left: 5px;
 }

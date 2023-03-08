@@ -27,7 +27,6 @@ class ApiCommentController extends BaseApiController
     #[Route('/post', name: 'post_comment')]
     public function postComment(Request $request, EntityManagerInterface $entityManager): Response
     {
-        dump($request);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -44,10 +43,21 @@ class ApiCommentController extends BaseApiController
         return $this->serializedResponseKo();
     }
 
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    #[Route('/vote', name: 'vote_comment')]
+    public function voteComment(Request $request, EntityManagerInterface $entityManager, CommentService $commentService): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $commentService->voteForComment($this->getUser(), $data['commentId'], $data['vote']);
+        return $this->serializedResponseOk();
+    }
+
     #[Route('/{id}', name: 'get_comments')]
     #[ParamConverter('article', class: Article::class)]
-    public function getComments(Article $article): Response
+    public function getComments(Article $article, CommentRepository $commentRepository, CommentService $commentService): Response
     {
-        return $this->serializedResponse($article->getComments());
+        $comments = $article->getComments();
+        $commentService->addVotes($comments);
+        return $this->serializedResponse($comments);
     }
 }

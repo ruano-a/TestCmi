@@ -16,7 +16,8 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text', TextType::class)
+            ->add('text', TextType::class, [
+                'attr' => ['minlength' => 5, 'maxlength' => 20]])
             ->add('article', EntityType::class, [
                 'class' => Article::class,
                 'query_builder' => function (EntityRepository $er) {

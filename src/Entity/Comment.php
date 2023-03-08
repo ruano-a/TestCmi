@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use App\Entity\Traits\CreatedByUser;
 use App\Entity\Traits\CreationDate;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -36,6 +39,17 @@ class Comment
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['read'])]
     private ?Comment $parentComment = null;
+
+    #[ORM\OneToMany(targetEntity: Vote::class, mappedBy: 'comment')]
+    private $votes;
+
+    #[Groups(['read'])]
+    private $score = 0;
+
+    public function __construct()
+    {
+        $this->votes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +89,30 @@ class Comment
     {
         $this->parentComment = $parentComment;
 
+        return $this;
+    }
+
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    public function setScore(int $score): self
+    {
+        $this->score = $score;
+
+        return $this;
+    }
+
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function addVote(int $value): self
+    {
+        $this->score += $value;
+        
         return $this;
     }
 }

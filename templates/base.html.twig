@@ -11,7 +11,7 @@
     </head>
     <body>
         <header>
-            <a id="logo" href="{{path('view_homepage')}}">Text CMI.</a> <span id="login-text">{% if app.user %}Logged in as {{app.user.username }}{% else %}Unlogged! <a href="{{ path('login') }}">Log in here</a>{% endif %}<span>
+            <a id="logo" href="{{path('view_homepage')}}">Test CMI.</a> <span id="login-text">{% if app.user %}Logged in as {{app.user.username }}{% else %}Unlogged! <a href="{{ path('login') }}">Log in here</a>{% endif %}<span>
         </header>
         {% block body %}{% endblock %}
         
