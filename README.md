@@ -22,11 +22,12 @@ php bin/console doctrine:fixtures:load
 
 * The error messages saying that you can't use facebook api in http doesn't matter in development mode
 
-* form submit (php)
-* get api js (jquery?)
+# TODO 
 * indexs
+* set api_fb_key in .env
 
 
+* form submit (php)
 * home page
 * article page
 * api provide article

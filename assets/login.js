@@ -23,8 +23,9 @@ function statusChangeCallback(response) {
 }
 
 window.fbAsyncInit = function() {
+  const facebookAppId = document.getElementById('login-form-wrapper').getAttribute('data-facebook-app-id');
   FB.init({
-    appId      : '916840026018060',
+    appId      : facebookAppId,
     cookie     : true,
     xfbml      : true,
     version    : 'v16.0'

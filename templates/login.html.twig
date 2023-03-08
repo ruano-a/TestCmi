@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-    <div id="login-form-wrapper">
+    <div id="login-form-wrapper" data-facebook-app-id="{{ app.request.server.get('FACEBOOK_APP_ID') }}">
         <div id="login-form">
             <div id="fb-root"></div>
             <div id="spinner-wrapper">
