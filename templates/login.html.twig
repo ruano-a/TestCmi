@@ -11,27 +11,30 @@
     <div id="login-form-wrapper">
         <div id="login-form">
             <div id="fb-root"></div>
-            <div id="spinner"
-                style="
-                    background: #4267b2;
-                    border-radius: 5px;
-                    color: white;
-                    height: 40px;
-                    text-align: center;
-                    width: 250px;">
-                Loading
-                <div
-                class="fb-login-button"
-                data-max-rows="1"
-                data-size="large"
-                data-button-type="continue_with"
-                data-use-continue-as="true"
-                data-scope="public_profile,email"
-                data-onlogin="checkLoginState();"
-                ></div>
+            <div id="spinner-wrapper">
+                <div id="spinner"
+                    style="
+                        background: #4267b2;
+                        border-radius: 5px;
+                        color: white;
+                        height: 40px;
+                        text-align: center;
+                        width: 250px;">
+                    Loading
+                </div>
             </div>
+            <div
+            class="fb-login-button"
+            data-max-rows="1"
+            data-size="large"
+            data-button-type="continue_with"
+            data-use-continue-as="true"
+            data-scope="public_profile,email"
+            data-onlogin="checkLoginState();"
+            data-auto_logout_link="false"
+            ></div>
         </div>
-        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
