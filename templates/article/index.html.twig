@@ -29,7 +29,8 @@
                 <input type="hidden" id="send-comment-parent" name="comment[parentComment]"/>
                 <input type="hidden" id="send-comment-article" name="comment[article]" value="{{ articleId }}"/>
                 {{ form_widget(form.text, { id: 'send-comment-input'}) }}
-                {{ form_widget(form._token) }}
+                {{ form_widget(form._token) }}  
+                {{ form_widget(form.recaptcha, { 'id': 'comment-recaptcha', 'attr': {'data-site-key': google_recaptcha_site_key } }) }}
                 <button type="button" id="send-comment-button">Send comment</button>
             </form>
         {% endif %}
@@ -38,5 +39,6 @@
 
 {% block javascripts %}
     {{ parent() }}
+     <script src="https://www.google.com/recaptcha/api.js?render={{ google_recaptcha_site_key }}"></script>
     {{ encore_entry_script_tags('article') }}
 {% endblock %}

@@ -116,21 +116,30 @@ function loadComments(articleId) {
 
 function sendComment() {
 	commentSending = true;
-	const form = document.getElementById('send-comment-area');
-	const data = new URLSearchParams();
-	for (const pair of new FormData(form)) {
-	    data.append(pair[0], pair[1]);
-	}
-	ApiService.postForm(postCommentUrl, data, (result) => {
-		console.log("Success:", result);
-		if (result.result === 'ok')
-			window.location.reload();
-		else
-			window.alert(result.message);
-	},
-	(error) => {
-		console.error(error);
-		window.alert(error);
+	grecaptcha.ready(function() {
+		const commentRecaptcha = document.getElementById('comment-recaptcha');
+		grecaptcha.execute(commentRecaptcha.getAttribute('data-site-key'), {action: 'post_comment'}).then(function(token) {
+			commentRecaptcha.value = token;
+			const form = document.getElementById('send-comment-area');
+			const data = new URLSearchParams();
+			for (const pair of new FormData(form)) {
+			    data.append(pair[0], pair[1]);
+			}
+			ApiService.postForm(postCommentUrl, data, (result) => {
+				console.log("Success:", result);
+				if (result.result === 'ok')
+					window.location.reload();
+				else
+					window.alert(result.message);
+			},
+			(error) => {
+				console.error(error);
+				window.alert(error);
+			},
+			() => {
+				commentSending = false;
+			});
+		});
 	});
 }
 
