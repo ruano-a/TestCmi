@@ -33,3 +33,4 @@ php bin/console doctrine:fixtures:load
 
 * The error messages saying that you can't use facebook api in http don't matter in development mode
 * The design not being the subject, and everything being done with a timelimit, the design hasn't been worked on at all
+* The input to send a comment appears when you first display the comments
