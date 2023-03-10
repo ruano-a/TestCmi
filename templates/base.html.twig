@@ -4,17 +4,49 @@
         <meta charset="UTF-8">
         <title>{% block title %}Article website{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
     </head>
     <body>
         <header>
-            <a id="logo" href="{{path('view_homepage')}}">Test CMI.</a> <span id="login-text">{% if app.user %}Logged in as {{app.user.username }} <a href="{{ path('app_logout') }}">Log out</a>{% else %}Unlogged! <a href="{{ path('login') }}">Log in here</a>{% endif %}<span>
+            <a id="logo" href="{{path('view_homepage')}}">Test CMI.</a>
+            <div id="login-text">
+                <div></div>
+                <div>
+                    {% if app.user %}
+                        <div id="logged-text">
+                            {{ app.user.username }}
+                        </div>
+                        <div id="logged-link">
+                            <a href="{{ path('app_logout') }}">Log out</a>
+                        </div>
+                    {% else %}
+                        <div id="logged-text">
+                            Unlogged
+                        </div>
+                        <div id="logged-link">
+                            <a href="{{ path('login') }}">Log in here</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </header>
+        <div id="header-2-links">
+            <ul id="header-2-wrapper">
+                <li id="link-article-1"><a href="{{path('view_article', {id: 1})}}">Article 1</a></li>
+                <li id="link-article-2"><a href="{{path('view_article', {id: 2})}}">Article 2</a></li>
+            </ul>
+        </div>
+        <div id="body-left"></div>
+        <div id="body-center">
         {% block body %}{% endblock %}
-        
+        </div>
+        <div id="body-right"></div>
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

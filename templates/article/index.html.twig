@@ -8,11 +8,11 @@
 {% endblock %}
 
 {% block body %}
-    <div id="article" data-id="{{ articleId }}">
+    <div id="article" data-id="{{ articleId }}" class="block-container">
+        <div id="article-date"></div>
         <h1 id="article-title"></h1>
         <div id="article-content"></div>
         <div id="article-bottom">
-            <div id="article-date"></div>
             <div id="article-author"></div>
         </div>
     </div>
@@ -20,6 +20,7 @@
         <div id="article-comments">
         </div>
         <button id="load-comments">Load comments</button>
+        <div id="answer-description"></div>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <form id="send-comment-area" style="display: none">
                 {#

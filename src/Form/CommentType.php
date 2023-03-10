@@ -21,7 +21,7 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('text', TextType::class, [
-                'attr' => ['minlength' => 5, 'maxlength' => 20]])
+                'attr' => ['minlength' => 5, 'maxlength' => 20, 'placeholder' => 'Your comment...']])
             ->add('article', EntityType::class, [
                 'class' => Article::class,
                 'query_builder' => function (EntityRepository $er) {

@@ -9,10 +9,29 @@
 	padding: 5px;
 }
 
-.recent-comment-author {
-	width: 15%;
-}
-
 .recent-comment-right-part {
 	width: 80%; /* the missing % is to compensate the inline-block margin */
+	position: relative;
+}
+
+.recent-comment-date {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 0.9em;
+}
+
+.recent-comment-article {
+	font-size: 1.125rem;
+	margin: 0.7rem 0 1.563rem;
+}
+
+.recent-comment-author {
+	width: 15%;
+	color: #656565;
+	font-weight: bold;
+}
+
+.recent-comment-content {
+	color: #656565;
 }

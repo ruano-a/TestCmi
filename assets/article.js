@@ -14,7 +14,7 @@ var commentSending = false;
 function createCommentBlock(commentData, level, sendCommentArea) {
 	const container = document.createElement("div");
 	const moveRight = level * 30;
-	container.className = 'article-comment';
+	container.className = 'article-comment block-container';
 
 	container.style = 'margin-left: ' + moveRight + 'px; width: calc(100% - ' + moveRight + 'px)';
 	container.innerHTML = '<div class="comment-left-part">'
@@ -74,11 +74,14 @@ function addCommentsWaterfall(commentContainer, sortedComments, level) {
 			const answerLink = newComment.getElementsByClassName('comment-answer');
 			const upvoteLink = newComment.getElementsByClassName('comment-vote-plus');
 			const downvoteLink = newComment.getElementsByClassName('comment-vote-minus');
+			const answerDescription = document.getElementById('answer-description');
 			const id = commentData.id;
 			answerLink[0].addEventListener('click', (e) => {
 				e.preventDefault();
 				const commentParent = document.getElementById('send-comment-parent');
 				commentParent.value = id;
+				const contentNode = e.target.parentNode.getElementsByClassName('comment-content')[0];
+				answerDescription.innerHTML = 'Answer to "' + contentNode.innerHTML + '"';
 			});
 			upvoteLink[0].addEventListener('click', (e) => {
 				e.preventDefault();
@@ -101,7 +104,6 @@ function loadComments(articleId) {
 	ApiService.get(commentsBaseUrl + articleId, (result) => {
 		const commentContainer = document.getElementById('article-comments')
 		const sortedComments = sortCommentsByParent(result);
-		console.log(sortedComments);
 		addCommentsWaterfall(commentContainer, sortedComments, 0);
 		commentsButton.remove();
 		if (sendCommentArea)
