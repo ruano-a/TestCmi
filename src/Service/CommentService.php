@@ -5,12 +5,15 @@ namespace App\Service;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Entity\Vote;
+use App\Form\CommentType;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class CommentService
 {
-	public function __construct(protected EntityManagerInterface $entityManager)
+	public function __construct(protected EntityManagerInterface $entityManager, protected FormFactoryInterface $formFactory)
 	{
 
 	}
@@ -41,5 +44,23 @@ class CommentService
 		$vote->initCreationDate();
 		$vote->setValue($value);
 		$this->entityManager->flush();
+	}
+
+	public function createComment(Request $request, User $user): bool
+	{
+        $comment = new Comment();
+        $form = $this->formFactory->create(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $comment->initCreationDate();
+            $comment->setCreatedByUser($user);
+
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush($comment);
+
+            return true;
+        }
+        return false;
 	}
 }

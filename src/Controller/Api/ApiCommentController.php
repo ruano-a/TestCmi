@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Controller\Api\BaseApiController;
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Service\CommentService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,19 +24,9 @@ class ApiCommentController extends BaseApiController
 
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
     #[Route('/post', name: 'post_comment')]
-    public function postComment(Request $request, EntityManagerInterface $entityManager): Response
+    public function postComment(Request $request, CommentService $commentService): Response
     {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment = $form->getData();
-            $comment->initCreationDate();
-            $comment->setCreatedByUser($this->getUser());
-
-            $entityManager->persist($comment);
-            $entityManager->flush($comment);
-
+        if ($commentService->createComment($request, $this->getUser())) {
             return $this->serializedResponseOk();
         }
         return $this->serializedResponseKo();
